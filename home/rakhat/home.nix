@@ -38,7 +38,6 @@
     #  /etc/profiles/per-user/m3tam3re/etc/profile.d/hm-session-vars.sh
     #
     sessionVariables = { };
-
   };
 
   accounts = {

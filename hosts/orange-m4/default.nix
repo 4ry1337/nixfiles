@@ -19,13 +19,13 @@
     "flakes"
   ];
 
-  users.users."4ry".home = "/Users/4ry";
+  users.users.rakhat.home = "/Users/rakhat";
 
   home-manager = {
     useUserPackages = true;
     extraSpecialArgs = { inherit inputs outputs; };
     backupFileExtension = "bak";
-    users."4ry" = import ../../home/rakhat/orange-m4.nix;
+    users.rakhat = import ../../home/rakhat/orange-m4.nix;
   };
 
   fonts.packages = [ pkgs.nerd-fonts.iosevka-term ];
