@@ -1,10 +1,12 @@
-{ pkgs, ... }:
+{ inputs, pkgs, ... }:
 {
+  imports = [ inputs.home-manager.darwinModules.home-manager ];
+
   networking.hostName = "orange-m4";
 
   nixpkgs = {
     hostPlatform = "aarch64-darwin";
-    config.allowUnfree = true; # claude-code
+    config.allowUnfree = true;
   };
 
   nix.settings.experimental-features = [
@@ -12,13 +14,19 @@
     "flakes"
   ];
 
-  environment.systemPackages = with pkgs; [
-    claude-code
-    gh
-    ghq
-    git
-  ];
+  users.users."4ry".home = "/Users/4ry";
 
-  programs.zsh.enable = true; # puts system packages on zsh's PATH
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    extraSpecialArgs = { inherit inputs; };
+    backupFileExtension = "bak";
+    users."4ry" = import ../../home/rakhat/orange-m4.nix;
+  };
+
+  fonts.packages = [ pkgs.nerd-fonts.iosevka-term ];
+
+  programs.zsh.enable = true;
+
   system.stateVersion = 7;
 }
