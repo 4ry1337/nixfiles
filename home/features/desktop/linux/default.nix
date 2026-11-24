@@ -1,5 +1,6 @@
 { pkgs, ... }: {
   imports = [
+    ../common
     ./hyprland
     ./windows-dirs.nix
   ];
@@ -25,11 +26,4 @@
       extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
     };
   };
-
-  # FONTS
-  home.packages = with pkgs; [
-    openmoji-color
-    nerd-fonts.iosevka
-    nerd-fonts.iosevka-term
-  ];
 }
