@@ -38,7 +38,7 @@
 
 {
   imports = [
-    ../common
+    ../common/nixos.nix
     ./configuration.nix
     ./services
     ./secrets.nix
