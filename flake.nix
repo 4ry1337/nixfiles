@@ -24,6 +24,8 @@
 
     # hardware
     hardware.url = "github:NixOS/nixos-hardware/master";
+
+    # dualboot + windows boot signing
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v1.1.0";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -41,6 +43,7 @@
       url = "git+https://github.com/4ry1337/dotfiles.git";
       flake = false;
     };
+
     # desktop
     snappy-switcher.url = "github:OpalAayan/snappy-switcher";
   };
@@ -58,17 +61,9 @@
     }@inputs:
     let
       inherit (self) outputs;
-      systems = [
-        "aarch64-linux"
-        "i686-linux"
-        "x86_64-linux"
-        "aarch64-darwin"
-        "x86_64-darwin"
-      ];
-      forAllSystems = nixpkgs.lib.genAttrs systems;
     in
     {
-      packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
+      packages.x86_64-linux = import ./pkgs nixpkgs.legacyPackages.x86_64-linux;
       overlays = import ./overlays { inherit inputs; };
       nixosConfigurations = {
         ary = nixpkgs.lib.nixosSystem {
