@@ -16,6 +16,12 @@
     unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     stable.url = "github:nixos/nixpkgs/nixos-26.05";
 
+    # macOS
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # hardware
     hardware.url = "github:NixOS/nixos-hardware/master";
     lanzaboote = {
@@ -47,6 +53,7 @@
       agenix,
       lanzaboote,
       nixpkgs,
+      nix-darwin,
       ...
     }@inputs:
     let
@@ -81,6 +88,9 @@
             ./hosts/blind-warrior
           ];
         };
+      };
+      darwinConfigurations.orange-m4 = nix-darwin.lib.darwinSystem {
+        modules = [ ./hosts/orange-m4 ];
       };
       homeConfigurations = {
         "rakhat@ary" = home-manager.lib.homeManagerConfiguration {
