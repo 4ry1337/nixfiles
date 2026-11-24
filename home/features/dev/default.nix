@@ -21,11 +21,14 @@ in
     features.dev.ai.claude-code.enable = mkDefault true;
     features.dev.ai.codex.enable = mkDefault true;
 
-    home.packages = with pkgs; [
-      devenv
-      gcc
-      vulkan-tools # Graphics debugging tools
-    ];
+    home.packages =
+      with pkgs;
+      [
+        devenv
+        vulkan-tools # Graphics debugging tools
+      ]
+      # on macOS, gcc would shadow Apple's cc
+      ++ optionals stdenv.hostPlatform.isLinux [ gcc ];
 
     # devenv cd-activation hook — only emitted when zsh is managed
     programs.zsh.initContent = mkIf config.programs.zsh.enable ''

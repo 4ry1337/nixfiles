@@ -14,6 +14,18 @@
     gtk-application-prefer-dark-theme = true;
   };
 
+  xdg = {
+    enable = true;
+    userDirs = {
+      enable = true;
+      createDirectories = true;
+    };
+    portal = {
+      enable = true;
+      extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    };
+  };
+
   # FONTS
   home.packages = with pkgs; [
     openmoji-color

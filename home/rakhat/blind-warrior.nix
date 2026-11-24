@@ -5,7 +5,7 @@ _: {
     ../common
     ../features/apps
     ../features/cli
-    ../features/desktop
+    ../features/desktop/linux
     ../features/dev
     ../features/gaming
   ];

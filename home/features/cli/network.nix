@@ -12,28 +12,33 @@ in
   options.features.cli.network.enable = mkEnableOption "network tools";
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
-      # diagnostics
-      mtr
-      tcpdump
-      nmap
-      ethtool
-      dhcpcd
+    home.packages =
+      with pkgs;
+      [
+        # diagnostics
+        mtr
+        tcpdump
+        nmap
 
-      # dns
-      dnsutils
-      dog
+        # dns
+        dnsutils
+        dog
 
-      # bandwidth
-      iperf3
-      bandwhich
+        # bandwidth
+        iperf3
+        bandwhich
 
-      # tunneling / vpn
-      wireguard-tools
-      mosh
+        # tunneling / vpn
+        wireguard-tools
+        mosh
+      ]
+      ++ optionals stdenv.hostPlatform.isLinux [
+        # diagnostics
+        ethtool
+        dhcpcd
 
-      # security audit
-      nftables
-    ];
+        # security audit
+        nftables
+      ];
   };
 }

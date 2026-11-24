@@ -85,7 +85,7 @@
         };
       };
       darwinConfigurations.orange-m4 = nix-darwin.lib.darwinSystem {
-        specialArgs = { inherit inputs; };
+        specialArgs = { inherit inputs outputs; };
         modules = [ ./hosts/orange-m4 ];
       };
       homeConfigurations = {

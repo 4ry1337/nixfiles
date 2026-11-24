@@ -1,4 +1,9 @@
-{ inputs, pkgs, ... }:
+{
+  inputs,
+  outputs,
+  pkgs,
+  ...
+}:
 {
   imports = [ inputs.home-manager.darwinModules.home-manager ];
 
@@ -17,9 +22,8 @@
   users.users."4ry".home = "/Users/4ry";
 
   home-manager = {
-    useGlobalPkgs = true;
     useUserPackages = true;
-    extraSpecialArgs = { inherit inputs; };
+    extraSpecialArgs = { inherit inputs outputs; };
     backupFileExtension = "bak";
     users."4ry" = import ../../home/rakhat/orange-m4.nix;
   };

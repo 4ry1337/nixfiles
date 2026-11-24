@@ -12,22 +12,27 @@ in
   options.features.cli.disk.enable = mkEnableOption "disk management tools";
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
-      # space analysis
-      gdu
-      duf
-      dust
+    home.packages =
+      with pkgs;
+      [
+        # space analysis
+        gdu
+        duf
+        dust
 
-      # archives
-      ouch
-      unzip
+        # archives
+        ouch
+        unzip
 
-      # disk health
-      smartmontools
-      nvme-cli
+        # disk health
+        smartmontools
 
-      # sync
-      rsync
-    ];
+        # sync
+        rsync
+      ]
+      ++ optionals stdenv.hostPlatform.isLinux [
+        # disk health
+        nvme-cli
+      ];
   };
 }

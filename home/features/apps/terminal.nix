@@ -29,7 +29,11 @@ in
           "${pkgs.alacritty-theme}/share/alacritty-theme/${cfg.alacritty.theme}.toml"
         ];
 
-        window.opacity = 0.9;
+        window = {
+          opacity = 0.9;
+          # tmux binds Alt-h/Alt-l, but macOS types symbols with Option by default
+          option_as_alt = mkIf pkgs.stdenv.hostPlatform.isDarwin "Both";
+        };
 
         font = {
           size = 20;

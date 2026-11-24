@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ lib, pkgs, ... }: {
   imports = [
     ./rdp.nix
     ./media.nix
@@ -9,10 +9,12 @@
     ./browser.nix
   ];
 
-  home.packages = with pkgs; [
-    nautilus
-    obsidian
-    spotify
-    telegram-desktop
-  ];
+  home.packages =
+    with pkgs;
+    [
+      obsidian
+      spotify
+      telegram-desktop
+    ]
+    ++ lib.optionals stdenv.hostPlatform.isLinux [ nautilus ];
 }
