@@ -51,13 +51,6 @@
         flavor = "gmail.com";
       };
     };
-    calendar = {
-      basePath = "${config.home.homeDirectory}/.local/share/calendars";
-      accounts.personal = {
-        primary = true;
-        name = "Personal";
-      };
-    };
   };
 
   # Let Home Manager install and manage itself.
