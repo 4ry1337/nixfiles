@@ -1,4 +1,10 @@
-{ lib, rustPlatform, fetchFromGitHub }:
+{
+  lib,
+  rustPlatform,
+  fetchFromGitHub,
+  pkg-config,
+  zstd,
+}:
 
 rustPlatform.buildRustPackage {
   pname = "obs-spotify-widget";
@@ -14,6 +20,9 @@ rustPlatform.buildRustPackage {
   sourceRoot = "source/spotify_widget";
 
   cargoHash = "sha256-ox93yn0hLJ6QVzYH1QoF9EScFQYSTll1jle9hRB8hcY=";
+
+  nativeBuildInputs = [ pkg-config ];
+  buildInputs = [ zstd ];
 
   meta = with lib; {
     description = "OBS Spotify widget serving current track via MPRIS D-Bus";
