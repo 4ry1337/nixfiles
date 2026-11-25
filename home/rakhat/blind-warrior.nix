@@ -12,8 +12,10 @@ _: {
   features = {
     dev = {
       enable = true;
-      mobile.adb.enable = true;
+      ai.claude-code.enable = true;
+      ai.codex.enable = false;
       ai.markitdown.enable = true;
+      # mobile.adb.enable = true;
     };
     apps = {
       onlyoffice.enable = true;

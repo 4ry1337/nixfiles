@@ -45,4 +45,12 @@
     ./services
     ./secrets.nix
   ];
+  /*
+    <<<<<<< Updated upstream
+    =======
+
+      extra_services.podman.enable = true;
+      extra_services.dbx-web.enable = true;
+    >>>>>>> Stashed changes
+  */
 }
