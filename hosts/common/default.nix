@@ -2,11 +2,24 @@
 
 {
   lib,
+  pkgs,
   inputs,
   outputs,
   ...
 }:
 {
+  imports = [
+    ./ssh.nix
+    ./users/rakhat.nix
+  ];
+
+  environment.systemPackages = with pkgs; [
+    neovim
+    git
+  ];
+
+  programs.zsh.enable = true;
+
   home-manager = {
     useUserPackages = true;
     extraSpecialArgs = { inherit inputs outputs; };

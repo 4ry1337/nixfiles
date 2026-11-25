@@ -1,8 +1,4 @@
-{
-  pkgs,
-  ...
-}:
-{
+_: {
   networking = {
     networkmanager.enable = true;
 
@@ -17,7 +13,6 @@
     kernelModules = [ "tcp_bbr" ];
     kernel.sysctl = {
       # TCP hardening
-      "kernel.sysrq" = 0;
       "net.ipv4.conf.default.rp_filter" = 1;
       "net.ipv4.conf.all.rp_filter" = 1;
       "net.ipv4.conf.default.send_redirects" = 0;
@@ -63,13 +58,6 @@
       "net.core.netdev_budget" = 600;
       "net.core.netdev_budget_usecs" = 8000;
 
-      # Kernel Security Hardening
-      "kernel.kptr_restrict" = 2;
-      "kernel.dmesg_restrict" = 1;
-      "kernel.printk" = "3 3 3 3";
-      "kernel.unprivileged_bpf_disabled" = 1;
-      "kernel.yama.ptrace_scope" = 1;
-
       # BPF JIT compiler (performance boost & hardening)
       "net.core.bpf_jit_enable" = 1;
       "net.core.bpf_jit_harden" = 2;
@@ -82,6 +70,4 @@
 
   systemd.services.NetworkManager-wait-online.enable = false;
   systemd.network.wait-online.enable = false;
-
-  environment.systemPackages = with pkgs; [ networkmanagerapplet ];
 }

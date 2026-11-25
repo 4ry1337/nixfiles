@@ -1,0 +1,20 @@
+{ config, lib, ... }:
+let
+  cfg = config.features.tailscale;
+in
+{
+  config = lib.mkIf cfg.enable {
+    age.secrets.tailscale-authkey.file = ../../../secrets/tailscale-authkey.age;
+
+    services.tailscale = {
+      authKeyFile = config.age.secrets.tailscale-authkey.path;
+      openFirewall = true;
+      # run Tailscale's built-in SSH server (auth via the tailnet ACL policy)
+      extraSetFlags = [ "--ssh" ];
+    };
+
+    # tailnet is trusted — also lets the host's services (AdGuard, DNS, …) be
+    # reached over tailscale0 without per-port firewall rules
+    networking.firewall.trustedInterfaces = [ "tailscale0" ];
+  };
+}

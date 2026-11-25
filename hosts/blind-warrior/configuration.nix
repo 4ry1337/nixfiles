@@ -2,44 +2,34 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{
-  # config,
-  # lib,
-  pkgs,
-  ...
-}:
-{
+_: {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ../modules/audio.nix
-    ../modules/bluetooth.nix
-    ../modules/dns.nix
-    ../modules/fs.nix
-    ../modules/networking.nix
-    ../modules/power.nix
-    ../modules/security.nix
-    ../modules/shell.nix
-    ../modules/hardware.nix
-    ../modules/ssh.nix
-    ../modules/tailscale.nix
-    ../modules/time_and_lang.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
 
   networking.hostName = "blind-warrior";
-  programs.hyprland = {
-    enable = true;
-    withUWSM = true;
+
+  features = {
+    audio.enable = true;
+    bluetooth.enable = true;
+    dns.enable = true;
+    hyprland.enable = true;
+    nvidia.enable = true;
+    podman.enable = true;
+    power.enable = true;
+    tailscale.enable = true;
   };
 
-  programs.nix-ld.enable = true;
-
-  environment.systemPackages = with pkgs; [
-    neovim
-    git
-  ];
+  services.logind.settings.Login = {
+    HandleLidSwitch = "ignore";
+    HandleLidSwitchExternalPower = "ignore";
+    HandleSuspendKey = "ignore";
+    HandleHibernateKey = "ignore";
+    KillUserProcesses = false;
+  };
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.

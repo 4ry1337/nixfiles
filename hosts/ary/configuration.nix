@@ -13,19 +13,6 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ../modules/audio.nix
-    ../modules/bluetooth.nix
-    ../modules/dns.nix
-    ../modules/vpn.nix
-    ../modules/fs.nix
-    ../modules/networking.nix
-    ../modules/power.nix
-    ../modules/security.nix
-    ../modules/shell.nix
-    ../modules/hardware.nix
-    ../modules/ssh.nix
-    ../modules/tailscale.nix
-    ../modules/time_and_lang.nix
   ];
   networking.hostName = "ary";
 
@@ -38,16 +25,23 @@
     pkiBundle = "/var/lib/sbctl";
   };
 
-  programs.hyprland = {
-    enable = true;
-    withUWSM = true;
+  features = {
+    audio.enable = true;
+    bluetooth.enable = true;
+    dns.enable = true;
+    hyprland.enable = true;
+    nvidia.enable = true;
+    podman.enable = true;
+    power.enable = true;
+    tailscale.enable = true;
   };
 
-  programs.nix-ld.enable = true;
+  networking.networkmanager.plugins = with pkgs; [
+    networkmanager-openconnect
+  ];
 
   environment.systemPackages = with pkgs; [
-    neovim
-    git
+    openconnect
   ];
 
   fileSystems."/mnt/windows" = {

@@ -1,6 +1,7 @@
 {
   imports = [
-    ../common/macos.nix
+    ../common/macos
+    ../features
     ./configuration.nix
   ];
 }

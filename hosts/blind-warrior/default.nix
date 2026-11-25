@@ -38,11 +38,11 @@
 
 {
   imports = [
-    ../common/nixos.nix
+    ../common/nixos
+    ../features
+    ../features/nixos
     ./configuration.nix
     ./services
     ./secrets.nix
   ];
-
-  extra_services.podman.enable = true;
 }
