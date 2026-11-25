@@ -11,5 +11,8 @@
 
   programs.zsh.enable = true;
 
+  # no authKeyFile on nix-darwin: log in once with `tailscale up`
+  services.tailscale.enable = true;
+
   system.stateVersion = 7;
 }
