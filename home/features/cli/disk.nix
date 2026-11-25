@@ -15,20 +15,14 @@ in
     home.packages =
       with pkgs;
       [
-        # space analysis
-        gdu
-        duf
-        dust
-
         # archives
-        ouch
         unzip
 
         # disk health
         smartmontools
 
         # sync
-        rsync
+        # rsync
       ]
       ++ optionals stdenv.hostPlatform.isLinux [
         # disk health

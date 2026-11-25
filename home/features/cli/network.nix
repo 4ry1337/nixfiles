@@ -16,21 +16,21 @@ in
       with pkgs;
       [
         # diagnostics
-        mtr
+        # mtr
         tcpdump
         nmap
 
         # dns
         dnsutils
-        dog
+        # dog
 
         # bandwidth
-        iperf3
-        bandwhich
+        # iperf3
+        # bandwhich
 
         # tunneling / vpn
-        wireguard-tools
-        mosh
+        # wireguard-tools
+        # mosh
       ]
       ++ optionals stdenv.hostPlatform.isLinux [
         # diagnostics
