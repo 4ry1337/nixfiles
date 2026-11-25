@@ -9,15 +9,29 @@ _: {
     ../features/dev
   ];
   features = {
-    dev.ai.claude-code.enable = true;
-    apps.terminal.alacritty = {
+    dev = {
       enable = true;
-      theme = "tokyo_night";
+      ai.claude-code.enable = true;
+    };
+    apps = {
+      blender.enable = true;
+      terminal.alacritty = {
+        enable = true;
+        theme = "tokyo_night";
+      };
+      browser.google-chrome.enable = true;
     };
     cli = {
+      network.enable = true;
+      disk.enable = true;
+      eza.enable = true;
+      fzf.enable = true;
       git.enable = true;
       neovim.enable = true;
+      oh-my-posh.enable = true;
       tmux.enable = true;
+      zoxide.enable = true;
+      zsh.enable = true;
     };
   };
 }
