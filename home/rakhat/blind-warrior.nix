@@ -16,7 +16,9 @@ _: {
       ai.markitdown.enable = true;
     };
     apps = {
-      media.enable = true;
+      onlyoffice.enable = true;
+      viewers.enable = true;
+      vlc.enable = true;
       obs.enable = true;
       tools.dua.enable = true;
       terminal.alacritty = {

@@ -6,7 +6,7 @@
 }:
 with lib;
 let
-  cfg = config.features.apps.media;
+  cfg = config.features.apps.viewers;
 
   imageMimes = [
     "image/jpeg"
@@ -31,15 +31,9 @@ let
   ];
 in
 {
-  options.features.apps.media.enable = mkEnableOption "Enable media applications";
+  options.features.apps.viewers.enable = mkEnableOption "PDF and image viewers (Linux only)";
 
-  config = mkIf cfg.enable {
-    home.packages = with pkgs; [
-      vlc
-      calibre
-      onlyoffice-desktopeditors
-    ];
-
+  config = mkIf (cfg.enable && pkgs.stdenv.hostPlatform.isLinux) {
     programs.zathura.enable = true;
 
     programs.swayimg = {

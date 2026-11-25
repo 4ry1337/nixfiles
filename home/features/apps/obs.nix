@@ -11,7 +11,8 @@ in
 {
   options.features.apps.obs.enable = mkEnableOption "Enable OBS Studio";
 
-  config = mkIf cfg.enable {
+  # macOS: installed by hosts/common/macos/homebrew.nix
+  config = mkIf (cfg.enable && pkgs.stdenv.hostPlatform.isLinux) {
     programs.obs-studio = {
       enable = true;
       plugins = with pkgs.obs-studio-plugins; [

@@ -1,7 +1,9 @@
 { lib, pkgs, ... }: {
   imports = [
     ./rdp.nix
-    ./media.nix
+    ./onlyoffice.nix
+    ./viewers.nix
+    ./vlc.nix
     ./tools.nix
     ./obs.nix
     ./blender.nix

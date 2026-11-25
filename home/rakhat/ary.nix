@@ -17,7 +17,9 @@ _: {
     };
     apps = {
       rdp.enable = true;
-      media.enable = true;
+      onlyoffice.enable = true;
+      viewers.enable = true;
+      vlc.enable = true;
       obs.enable = true;
       blender.enable = true;
       tools.dua.enable = true;

@@ -14,6 +14,9 @@ _: {
       ai.claude-code.enable = true;
     };
     apps = {
+      onlyoffice.enable = true;
+      obs.enable = true;
+      vlc.enable = true;
       blender.enable = true;
       terminal.alacritty = {
         enable = true;
