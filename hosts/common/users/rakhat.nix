@@ -3,6 +3,7 @@
   lib,
   pkgs,
   inputs,
+  _class,
   ...
 }:
 {
@@ -33,4 +34,8 @@
     (lib.optionalAttrs pkgs.stdenv.hostPlatform.isDarwin { home = "/Users/rakhat"; })
   ];
   home-manager.users.rakhat = import ../../../home/rakhat/${config.networking.hostName}.nix;
+}
+// lib.optionalAttrs (_class == "darwin") {
+  # owner of per-user launchd jobs
+  system.primaryUser = "rakhat";
 }
