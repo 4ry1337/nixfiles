@@ -86,7 +86,10 @@
       };
       darwinConfigurations.orange-m4 = nix-darwin.lib.darwinSystem {
         specialArgs = { inherit inputs outputs; };
-        modules = [ ./hosts/orange-m4 ];
+        modules = [
+          agenix.darwinModules.default
+          ./hosts/orange-m4
+        ];
       };
       homeConfigurations = {
         "rakhat@ary" = home-manager.lib.homeManagerConfiguration {
