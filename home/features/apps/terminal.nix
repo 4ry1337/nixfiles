@@ -39,7 +39,7 @@ in
           size = 20;
           normal = {
             family = "IosevkaTerm Nerd Font Mono";
-            style = "Semibold";
+            style = "SemiBold";
           };
           bold = {
             family = "IosevkaTerm Nerd Font Mono";
