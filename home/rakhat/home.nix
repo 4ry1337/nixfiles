@@ -45,7 +45,7 @@
       maildirBasePath = "${config.home.homeDirectory}/mail";
       accounts.personal = {
         primary = true;
-        realName = "Rakhat";
+        realName = "Rakhat Yskak";
         address = "yskak.rakhat@gmail.com";
         flavor = "gmail.com";
       };

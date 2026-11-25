@@ -18,6 +18,10 @@ in
         lfs.enable = true;
         settings = {
           ghq.root = "~/Projects";
+          user = {
+            name = config.accounts.email.accounts.personal.realName;
+            email = config.accounts.email.accounts.personal.address;
+          };
         };
       };
       gh = {
