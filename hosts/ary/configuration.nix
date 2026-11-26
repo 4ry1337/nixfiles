@@ -33,6 +33,7 @@
     podman.enable = true;
     power.enable = true;
     tailscale.enable = true;
+    services.dbx-web.enable = true;
   };
 
   fileSystems."/mnt/windows" = {

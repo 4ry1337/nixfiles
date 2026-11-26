@@ -20,6 +20,7 @@ _: {
     podman.enable = true;
     power.enable = true;
     tailscale.enable = true;
+    services.excalidraw.enable = true;
   };
 
   services.logind.settings.Login = {

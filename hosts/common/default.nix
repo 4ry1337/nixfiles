@@ -10,6 +10,7 @@
 }:
 {
   imports = [
+    ./services
     ./ssh.nix
     ./users
   ];
