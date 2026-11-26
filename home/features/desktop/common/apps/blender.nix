@@ -6,12 +6,12 @@
 }:
 with lib;
 let
-  cfg = config.features.apps.blender;
+  cfg = config.features.desktop.apps.blender;
 in
 {
-  options.features.apps.blender.enable = mkEnableOption "Enable blender application";
+  options.features.desktop.apps.blender.enable = mkEnableOption "Enable blender application";
 
-  config = mkIf cfg.enable {
+  config = mkIf (config.features.desktop.enable && cfg.enable) {
     home.packages = with pkgs; [
       blender
 

@@ -6,7 +6,7 @@
 }:
 with lib;
 let
-  cfg = config.features.apps.viewers;
+  cfg = config.features.desktop.apps.viewers;
 
   imageMimes = [
     "image/jpeg"
@@ -31,9 +31,9 @@ let
   ];
 in
 {
-  options.features.apps.viewers.enable = mkEnableOption "PDF and image viewers (Linux only)";
+  options.features.desktop.apps.viewers.enable = mkEnableOption "PDF and image viewers (Linux only)";
 
-  config = mkIf (cfg.enable && pkgs.stdenv.hostPlatform.isLinux) {
+  config = mkIf (config.features.desktop.enable && cfg.enable && pkgs.stdenv.hostPlatform.isLinux) {
     programs.zathura.enable = true;
 
     programs.swayimg = {

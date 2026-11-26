@@ -1,29 +1,46 @@
-{ pkgs, ... }: {
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+{
   imports = [
     ../common
     ./hyprland
     ./windows-dirs.nix
   ];
 
-  gtk = {
-    enable = true;
-    gtk3.extraConfig."gtk-application-prefer-dark-theme" = true;
-  };
+  config = lib.mkMerge [
+    {
+      # Hyprland is the only Linux graphical session.
+      features.desktop.enable = config.features.desktop.hyprland.enable;
 
-  dconf.settings."org/gnome/desktop/interface" = {
-    color-scheme = "prefer-dark";
-    gtk-application-prefer-dark-theme = true;
-  };
+      # Base and user directories also serve CLI tools, so they stay on without a session.
+      xdg = {
+        enable = true;
+        userDirs = {
+          enable = true;
+          createDirectories = true;
+        };
+      };
+    }
 
-  xdg = {
-    enable = true;
-    userDirs = {
-      enable = true;
-      createDirectories = true;
-    };
-    portal = {
-      enable = true;
-      extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-    };
-  };
+    (lib.mkIf config.features.desktop.enable {
+      gtk = {
+        enable = true;
+        gtk3.extraConfig."gtk-application-prefer-dark-theme" = true;
+      };
+
+      dconf.settings."org/gnome/desktop/interface" = {
+        color-scheme = "prefer-dark";
+        gtk-application-prefer-dark-theme = true;
+      };
+
+      xdg.portal = {
+        enable = true;
+        extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+      };
+    })
+  ];
 }

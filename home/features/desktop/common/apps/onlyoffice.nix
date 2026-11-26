@@ -6,12 +6,12 @@
 }:
 with lib;
 let
-  cfg = config.features.apps.onlyoffice;
+  cfg = config.features.desktop.apps.onlyoffice;
 in
 {
-  options.features.apps.onlyoffice.enable = mkEnableOption "ONLYOFFICE desktop editors";
+  options.features.desktop.apps.onlyoffice.enable = mkEnableOption "ONLYOFFICE desktop editors";
 
-  config = mkIf cfg.enable (mkMerge [
+  config = mkIf (config.features.desktop.enable && cfg.enable) (mkMerge [
     (mkIf pkgs.stdenv.hostPlatform.isLinux {
       home.packages = [ pkgs.onlyoffice-desktopeditors ];
     })

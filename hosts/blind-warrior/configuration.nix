@@ -16,7 +16,6 @@ _: {
     audio.enable = true;
     bluetooth.enable = true;
     dns.enable = true;
-    hyprland.enable = true;
     nvidia.enable = true;
     podman.enable = true;
     power.enable = true;

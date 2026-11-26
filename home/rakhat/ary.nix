@@ -3,7 +3,6 @@ _: {
     ./home.nix
     ./dotfiles
     ../common
-    ../features/apps
     ../features/cli
     ../features/desktop/linux
     ../features/dev
@@ -18,19 +17,6 @@ _: {
         claude-code.enable = true;
         markitdown.enable = true;
       };
-    };
-    apps = {
-      onlyoffice.enable = true;
-      viewers.enable = true;
-      vlc.enable = true;
-      obs.enable = true;
-      blender.enable = true;
-      tools.dua.enable = true;
-      terminal.alacritty = {
-        enable = true;
-        theme = "tokyo_night";
-      };
-      browser.google-chrome.enable = true;
     };
     cli = {
       network.enable = true;
@@ -49,6 +35,19 @@ _: {
       windows-dirs = {
         enable = true;
         username = "yskak";
+      };
+      apps = {
+        onlyoffice.enable = true;
+        viewers.enable = true;
+        vlc.enable = true;
+        obs.enable = true;
+        blender.enable = true;
+        tools.dua.enable = true;
+        terminal.alacritty = {
+          enable = true;
+          theme = "tokyo_night";
+        };
+        browser.google-chrome.enable = true;
       };
     };
   };

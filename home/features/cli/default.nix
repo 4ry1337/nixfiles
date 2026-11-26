@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }: {
+{ pkgs, ... }: {
   imports = [
     ./disk.nix
     ./eza.nix
@@ -14,15 +14,12 @@
 
   programs.nix-index.enable = true;
 
-  home.packages =
-    with pkgs;
-    [
-      btop
-      fastfetch
-      coreutils
-      fd
-      jq
-      ripgrep
-    ]
-    ++ lib.optionals stdenv.hostPlatform.isLinux [ wl-clipboard ];
+  home.packages = with pkgs; [
+    btop
+    fastfetch
+    coreutils
+    fd
+    jq
+    ripgrep
+  ];
 }

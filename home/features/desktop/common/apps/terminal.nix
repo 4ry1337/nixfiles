@@ -6,10 +6,10 @@
 }:
 with lib;
 let
-  cfg = config.features.apps.terminal;
+  cfg = config.features.desktop.apps.terminal;
 in
 {
-  options.features.apps.terminal = {
+  options.features.desktop.apps.terminal = {
     alacritty.enable = mkEnableOption "Enable alacritty application";
     alacritty.theme = mkOption {
       type = types.str;
@@ -19,8 +19,9 @@ in
     };
   };
 
-  config = mkIf cfg.alacritty.enable {
+  config = mkIf (config.features.desktop.enable && cfg.alacritty.enable) {
     home.sessionVariables.TERMINAL = "alacritty";
+    xdg.terminal-exec.settings.default = [ "Alacritty.desktop" ];
 
     programs.alacritty = {
       enable = true;

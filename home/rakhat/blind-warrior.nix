@@ -3,11 +3,8 @@ _: {
     ./home.nix
     ./dotfiles
     ../common
-    ../features/apps
     ../features/cli
-    ../features/desktop/linux
     ../features/dev
-    ../features/gaming
   ];
   features = {
     dev = {
@@ -17,18 +14,6 @@ _: {
         markitdown.enable = true;
       };
       # mobile.adb.enable = true;
-    };
-    apps = {
-      onlyoffice.enable = true;
-      viewers.enable = true;
-      vlc.enable = true;
-      obs.enable = true;
-      tools.dua.enable = true;
-      terminal.alacritty = {
-        enable = true;
-        theme = "tokyo_night";
-      };
-      browser.google-chrome.enable = true;
     };
     cli = {
       disk.enable = true;
@@ -41,9 +26,6 @@ _: {
       tmux.enable = true;
       zoxide.enable = true;
       zsh.enable = true;
-    };
-    desktop = {
-      hyprland.enable = true;
     };
   };
 }

@@ -6,12 +6,12 @@
 }:
 with lib;
 let
-  cfg = config.features.apps.obs;
+  cfg = config.features.desktop.apps.obs;
 in
 {
-  options.features.apps.obs.enable = mkEnableOption "Enable OBS Studio";
+  options.features.desktop.apps.obs.enable = mkEnableOption "Enable OBS Studio";
 
-  config = mkIf cfg.enable (mkMerge [
+  config = mkIf (config.features.desktop.enable && cfg.enable) (mkMerge [
     (mkIf pkgs.stdenv.hostPlatform.isLinux {
       programs.obs-studio = {
         enable = true;

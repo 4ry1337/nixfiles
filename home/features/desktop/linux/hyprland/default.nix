@@ -34,6 +34,9 @@ in
   options.features.desktop.hyprland.enable = mkEnableOption "hyprland wayland compositor";
 
   config = mkIf cfg.enable {
+    # Terminal modules register themselves in settings.default; SUPER+T opens the first one.
+    xdg.terminal-exec.enable = true;
+
     xdg.portal.config.hyprland."org.freedesktop.impl.portal.Settings" = [ "gtk" ];
     wayland.windowManager.hyprland = {
       enable = true;
@@ -165,7 +168,7 @@ in
           {
             _args = [
               "${mainMod} + T"
-              (mkLua "hl.dsp.exec_cmd(\"alacritty\")")
+              (mkLua "hl.dsp.exec_cmd(\"xdg-terminal-exec\")")
             ];
           }
           {

@@ -6,18 +6,18 @@
 }:
 with lib;
 let
-  cfg = config.features.apps.tools;
+  cfg = config.features.desktop.apps.tools;
 in
 {
-  options.features.apps.tools = {
+  options.features.desktop.apps.tools = {
     dua.enable = mkEnableOption "Enable baobab DUA";
   };
 
-  config = mkMerge [
+  config = mkIf config.features.desktop.enable (mkMerge [
     (mkIf cfg.dua.enable {
       home.packages = with pkgs; [
         baobab
       ];
     })
-  ];
+  ]);
 }

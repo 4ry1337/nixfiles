@@ -3,7 +3,6 @@ _: {
     ./home.nix
     ./dotfiles
     ../common
-    ../features/apps
     ../features/cli
     ../features/desktop/macos
     ../features/dev
@@ -18,7 +17,7 @@ _: {
       };
     };
     work.enable = true;
-    apps = {
+    desktop.apps = {
       onlyoffice.enable = true;
       obs.enable = true;
       vlc.enable = true;
