@@ -6,6 +6,7 @@
   features = {
     podman.enable = true;
     tailscale.enable = true;
+    services.dbx-web.enable = true;
   };
 
   system.stateVersion = 7;
