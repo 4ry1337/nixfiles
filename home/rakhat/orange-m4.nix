@@ -7,6 +7,7 @@ _: {
     ../features/cli
     ../features/desktop/macos
     ../features/dev
+    ../features/work.nix
   ];
   features = {
     dev = {
@@ -16,8 +17,8 @@ _: {
         markitdown.enable = true;
       };
     };
+    work.enable = true;
     apps = {
-      rdp.enable = true;
       onlyoffice.enable = true;
       obs.enable = true;
       vlc.enable = true;

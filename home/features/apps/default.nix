@@ -1,6 +1,5 @@
 { lib, pkgs, ... }: {
   imports = [
-    ./rdp.nix
     ./onlyoffice.nix
     ./viewers.nix
     ./vlc.nix

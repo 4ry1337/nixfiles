@@ -8,6 +8,7 @@ _: {
     ../features/desktop/linux
     ../features/dev
     ../features/gaming
+    ../features/work.nix
   ];
   features = {
     dev = {
@@ -19,7 +20,6 @@ _: {
       };
     };
     apps = {
-      rdp.enable = true;
       onlyoffice.enable = true;
       viewers.enable = true;
       vlc.enable = true;

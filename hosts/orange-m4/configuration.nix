@@ -8,10 +8,5 @@
     tailscale.enable = true;
   };
 
-  homebrew = {
-    brews = [ "mas" ];
-    masApps."Cisco Secure Client" = 1135064690;
-  };
-
   system.stateVersion = 7;
 }
