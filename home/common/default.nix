@@ -5,7 +5,15 @@
   ...
 }:
 {
-  nixpkgs = {
+  # Declared on every host so feature modules can set it unconditionally;
+  # only nix-darwin (hosts/common/macos/homebrew.nix) reads it.
+  options.features.macos.casks = lib.mkOption {
+    type = lib.types.listOf lib.types.str;
+    default = [ ];
+    description = "Homebrew casks installed by nix-darwin.";
+  };
+
+  config.nixpkgs = {
     # You can add overlays here
     overlays = [
       # Add overlays your own flake exports (from overlays and pkgs dir):
@@ -32,7 +40,7 @@
     };
   };
 
-  nix = {
+  config.nix = {
     package = lib.mkDefault pkgs.nix;
     settings = {
       experimental-features = [

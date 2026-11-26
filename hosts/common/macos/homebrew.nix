@@ -1,12 +1,10 @@
 {
   config,
-  lib,
   inputs,
   ...
 }:
 let
   user = config.system.primaryUser;
-  inherit (config.home-manager.users.${user}.features) apps;
 in
 {
   imports = [ inputs.nix-homebrew.darwinModules.nix-homebrew ];
@@ -17,9 +15,9 @@ in
     inherit user;
   };
 
-  # apps nixpkgs does not build for macOS
+  # apps nixpkgs does not build for macOS; each feature module adds its own
   homebrew = {
     enable = true;
-    casks = lib.optional apps.onlyoffice.enable "onlyoffice" ++ lib.optional apps.obs.enable "obs";
+    inherit (config.home-manager.users.${user}.features.macos) casks;
   };
 }

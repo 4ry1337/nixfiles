@@ -17,6 +17,7 @@ _: {
       };
     };
     apps = {
+      rdp.enable = true;
       onlyoffice.enable = true;
       obs.enable = true;
       vlc.enable = true;

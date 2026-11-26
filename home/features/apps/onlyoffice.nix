@@ -11,8 +11,12 @@ in
 {
   options.features.apps.onlyoffice.enable = mkEnableOption "ONLYOFFICE desktop editors";
 
-  # macOS: installed by hosts/common/macos/homebrew.nix
-  config = mkIf (cfg.enable && pkgs.stdenv.hostPlatform.isLinux) {
-    home.packages = [ pkgs.onlyoffice-desktopeditors ];
-  };
+  config = mkIf cfg.enable (mkMerge [
+    (mkIf pkgs.stdenv.hostPlatform.isLinux {
+      home.packages = [ pkgs.onlyoffice-desktopeditors ];
+    })
+    (mkIf pkgs.stdenv.hostPlatform.isDarwin {
+      features.macos.casks = [ "onlyoffice" ];
+    })
+  ]);
 }
