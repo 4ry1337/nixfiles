@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   _class,
   ...
 }:
@@ -9,6 +10,7 @@ let
 
   cfg = config.features.containers;
   owner = config.features.primaryUser;
+  podman = lib.getExe pkgs.podman;
 
   segments = image: lib.splitString "/" image;
 
@@ -87,6 +89,22 @@ let
       assertion = !isHostPath volume;
       message = "features.containers.${name}.volumes: \"${volume}\" is a host path; use a named volume.";
     }) container.volumes;
+
+  runArgs =
+    name: container:
+    [
+      "run"
+      "--rm"
+      "--replace"
+      "--name=${name}"
+    ]
+    ++ map (port: "--publish=${port}") container.ports
+    ++ map (volume: "--volume=${volume}") container.volumes
+    ++ lib.mapAttrsToList (key: value: "--env=${key}=${value}") container.environment
+    ++ [ container.image ]
+    ++ container.cmd;
+
+  darwinLog = name: "${config.users.users.${owner}.home}/Library/Logs/${name}.log";
 in
 {
   options.features.containers = mkOption {
@@ -98,13 +116,7 @@ in
   config = lib.mkIf (cfg != { }) (
     lib.mkMerge [
       {
-        assertions = [
-          {
-            assertion = _class == "nixos";
-            message = "features.containers: no backend for ${_class} yet; declared: ${lib.concatStringsSep ", " (lib.attrNames cfg)}.";
-          }
-        ]
-        ++ lib.concatLists (lib.mapAttrsToList assertionsFor cfg);
+        assertions = lib.concatLists (lib.mapAttrsToList assertionsFor cfg);
 
         features.podman.enable = true;
       }
@@ -123,6 +135,42 @@ in
             ;
           podman.user = owner;
         }) cfg;
+      })
+
+      # containers run in the owner's podman VM; on sleep macOS freezes the VM, on wake they continue
+      (lib.optionalAttrs (_class == "darwin") {
+        launchd.user.agents = {
+          podman-machine = {
+            script = ''
+              ${podman} machine inspect >/dev/null 2>&1 || ${podman} machine init
+              if [ "$(${podman} machine inspect --format '{{.State}}')" != running ]; then
+                exec ${podman} machine start
+              fi
+            '';
+            serviceConfig = {
+              RunAtLoad = true;
+              StandardOutPath = darwinLog "podman-machine";
+              StandardErrorPath = darwinLog "podman-machine";
+            };
+          };
+        }
+        // lib.mapAttrs' (
+          name: container:
+          lib.nameValuePair "podman-${name}" {
+            # launchd has no start order, so each container waits for the VM itself
+            script = ''
+              until ${podman} info >/dev/null 2>&1; do sleep 5; done
+              exec ${podman} ${lib.escapeShellArgs (runArgs name container)}
+            '';
+            serviceConfig = {
+              RunAtLoad = true;
+              KeepAlive = true;
+              ThrottleInterval = 10;
+              StandardOutPath = darwinLog "podman-${name}";
+              StandardErrorPath = darwinLog "podman-${name}";
+            };
+          }
+        ) cfg;
       })
     ]
   );
