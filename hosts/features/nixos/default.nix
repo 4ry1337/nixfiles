@@ -6,6 +6,5 @@
     ./hyprland.nix
     ./nvidia.nix
     ./power.nix
-    ./tailscale.nix
   ];
 }
