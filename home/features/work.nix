@@ -22,6 +22,15 @@ in
       features.macos.casks = [ "windows-app" ];
     })
 
+    # nix git checks its own CA bundle, not the macOS Keychain.
+    # ghq treats the first two path segments as the repo; vcs=git makes it use the full URL (GitLab subgroups).
+    {
+      programs.git.settings = {
+        http."https://gitlab.erg.kz/".sslCAInfo = "${./erg-ca.pem}";
+        ghq."https://gitlab.erg.kz/".vcs = "git";
+      };
+    }
+
     # VPN (egvpn.erg.kz) via openconnect, AnyConnect protocol.
     #
     # The server requires a client certificate: ~/.config/erg-vpn/RaYs.pfx
