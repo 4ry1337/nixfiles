@@ -1,6 +1,7 @@
 # Common configuration for all hosts
 
 {
+  config,
   lib,
   pkgs,
   inputs,
@@ -10,7 +11,7 @@
 {
   imports = [
     ./ssh.nix
-    ./users/rakhat.nix
+    ./users
   ];
 
   environment.systemPackages = with pkgs; [
@@ -62,8 +63,8 @@
         ];
         trusted-users = [
           "root"
-          "rakhat"
-        ]; # Set users that are allowed to use the flake command
+          config.features.primaryUser
+        ];
       };
       gc = {
         automatic = true;

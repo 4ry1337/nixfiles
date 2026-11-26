@@ -3,7 +3,7 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 {
-  # config,
+  config,
   lib,
   ...
 }:
@@ -40,8 +40,8 @@
     fsType = "ntfs-3g";
     options = [
       "rw"
-      "uid=1000"
-      "gid=1000"
+      "uid=${toString config.users.users.${config.features.primaryUser}.uid}"
+      "gid=${toString config.users.groups.users.gid}"
       "windows_names"
     ];
   };
