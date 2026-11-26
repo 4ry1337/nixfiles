@@ -174,7 +174,7 @@ in
           {
             _args = [
               "${mainMod} + E"
-              (mkLua "hl.dsp.exec_cmd(\"nautilus\")")
+              (mkLua "hl.dsp.exec_cmd(\"xdg-open $HOME\")")
             ];
           }
           {
@@ -494,6 +494,7 @@ in
         swappy
         wl-clipboard
         cliphist
+        xdg-utils
         wf-recorder
         playerctl
       ])
