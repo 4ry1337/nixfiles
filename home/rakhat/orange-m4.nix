@@ -11,7 +11,10 @@ _: {
   features = {
     dev = {
       enable = true;
-      ai.claude-code.enable = true;
+      ai = {
+        claude-code.enable = true;
+        markitdown.enable = true;
+      };
     };
     apps = {
       onlyoffice.enable = true;

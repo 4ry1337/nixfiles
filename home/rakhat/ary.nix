@@ -13,7 +13,10 @@ _: {
     dev = {
       enable = true;
       mobile.adb.enable = true;
-      ai.markitdown.enable = true;
+      ai = {
+        claude-code.enable = true;
+        markitdown.enable = true;
+      };
     };
     apps = {
       rdp.enable = true;

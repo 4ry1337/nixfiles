@@ -12,9 +12,10 @@ _: {
   features = {
     dev = {
       enable = true;
-      ai.claude-code.enable = true;
-      ai.codex.enable = false;
-      ai.markitdown.enable = true;
+      ai = {
+        claude-code.enable = true;
+        markitdown.enable = true;
+      };
       # mobile.adb.enable = true;
     };
     apps = {
