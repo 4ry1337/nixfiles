@@ -9,6 +9,22 @@ let
   cfg = config.features.work;
   openconnect = getExe pkgs.openconnect;
   vpnPidFile = "/tmp/erg-vpn.pid";
+
+  # Output format: `go help goauth`. Go also calls it with a URL after a 4xx; the answer is the same.
+  ergGoAuth = pkgs.writeShellApplication {
+    name = "erg-go-auth";
+    runtimeInputs = [
+      config.programs.git.package
+      pkgs.coreutils
+    ];
+    text = ''
+      credential=$(printf 'protocol=https\nhost=gitlab.erg.kz\n\n' | GIT_TERMINAL_PROMPT=0 git credential fill)
+      username=$(sed -n 's/^username=//p' <<<"$credential")
+      password=$(sed -n 's/^password=//p' <<<"$credential")
+      printf 'https://gitlab.erg.kz\n\nAuthorization: Basic %s\n\n' \
+        "$(printf '%s:%s' "$username" "$password" | base64 -w0)"
+    '';
+  };
 in
 {
   options.features.work.enable = mkEnableOption "corporate (ERG) work tools";
@@ -28,6 +44,37 @@ in
       programs.git.settings = {
         http."https://gitlab.erg.kz/".sslCAInfo = "${./erg-ca.pem}";
         ghq."https://gitlab.erg.kz/".vcs = "git";
+      };
+    }
+
+    # Private Go modules on gitlab.erg.kz.
+    #
+    # Without auth, GitLab answers go-get for subgroup modules with 200 and the wrong
+    # repo (qollab-mobile/services.git). GOAUTH=git does not help: Go runs it only
+    # after a 4xx. A GOAUTH command runs before the first request, so it sends the
+    # git credential (osxkeychain) at once. GOPRIVATE also sets the defaults of
+    # GONOPROXY and GONOSUMDB.
+    #
+    # Only the env file is written; each project gets its Go from devenv.
+    # Home Manager owns the env file, so `go env -w` fails.
+    #
+    # If GitLab refuses the Keychain credential, store a read_api + read_repository
+    # token. Type the lines below on stdin (not as arguments) to keep the token
+    # out of shell history:
+    #   git credential approve
+    #   protocol=https
+    #   host=gitlab.erg.kz
+    #   username=rakhat.yskak
+    #   password=<token>
+    #   <empty line>
+    {
+      programs.go = {
+        enable = true;
+        package = null;
+        env = {
+          GOPRIVATE = "gitlab.erg.kz";
+          GOAUTH = getExe ergGoAuth;
+        };
       };
     }
 
