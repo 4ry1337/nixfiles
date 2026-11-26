@@ -1,6 +1,6 @@
 _: {
-  virtualisation.oci-containers.containers."nginx" = {
-    image = "docker.io/nginx:alpine";
-    # environmentFiles = [ config.age.secrets.secret1.path ];
+  # Learning container: no published port, so it is reachable only from inside podman.
+  features.containers.nginx = {
+    image = "docker.io/library/nginx:1.30.8-alpine";
   };
 }

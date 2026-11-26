@@ -1,15 +1,8 @@
-{ lib, ... }: {
-  virtualisation.oci-containers.containers."echo-http-service" = {
-    image = "hashicorp/http-echo:latest";
-    extraOptions = [
-      "-text=Hello, World!"
-      "--network=web"
-    ];
+_: {
+  # HTTP test service: answers every request with the text below.
+  features.containers.echo-http-service = {
+    image = "docker.io/hashicorp/http-echo:1.0.0";
     ports = [ "5678:5678" ];
+    cmd = [ "-text=Hello, World!" ];
   };
-  system.activationScripts.createPodmanNetworkWeb = lib.mkAfter ''
-    if ! /run/current-system/sw/bin/podman network exists web; then
-      /run/current-system/sw/bin/podman network create --disable-dns web
-    fi
-  '';
 }
