@@ -3,6 +3,7 @@
   lib,
   pkgs,
   inputs,
+  _class,
   ...
 }:
 let
@@ -19,7 +20,7 @@ in
       ];
       packages = [ inputs.home-manager.packages.${pkgs.stdenv.hostPlatform.system}.default ];
     }
-    (lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
+    (lib.optionalAttrs (_class == "nixos") {
       # static, so mounts and rootless containers can refer to it
       uid = 1000;
       initialHashedPassword = "$y$j9T$IDkYUSjCVv0d7/tURzT/z0$cUeIhq8Z39jrnsMsfwmtV1SZwK3Yl1qZH/fVWOUwOg2";
@@ -27,17 +28,13 @@ in
       extraGroups = [
         "wheel"
         "networkmanager"
-        "libvirtd"
-        "flatpak"
         "audio"
         "video"
-        "plugdev"
         "input"
         "kvm"
-        "qemu-libvirtd"
       ];
     })
-    (lib.optionalAttrs pkgs.stdenv.hostPlatform.isDarwin { home = "/Users/${name}"; })
+    (lib.optionalAttrs (_class == "darwin") { home = "/Users/${name}"; })
   ];
 
   home-manager.users.${name} = import ../../../home/rakhat/${config.networking.hostName}.nix;

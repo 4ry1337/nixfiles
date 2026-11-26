@@ -10,21 +10,8 @@ in
       allowedTCPPorts = [ 53 ];
       allowedUDPPorts = [ 53 ];
     };
-    # Disable systemd dns resolver
-    services.resolved = {
-      enable = false;
-      settings = {
-        Resolve = {
-          Domains = [ "~." ];
-          FallbackDNS = [ ]; # Empty to prevent bypass
-          DNSOverTLS = "true";
-
-          # github.com/systemd/systemd/issues/10579
-          # dnssec = "allow-downgrade";
-          DNSSEC = "false";
-        };
-      };
-    };
+    # AdGuard Home owns port 53, so systemd-resolved must not run
+    services.resolved.enable = false;
     systemd.services = {
       unbound.stopIfChanged = false;
       adguardhome = {
@@ -45,10 +32,8 @@ in
             # When using Unbound in combination with pi-hole or Adguard, leave 127.0.0.1, and point Adguard to 127.0.0.1:PORT
             interface = [ "127.0.0.1" ]; # "::1"
             port = 5335;
-            access-control = [
-              "127.0.0.1 allow"
-              "192.168.0.0/24 allow"
-            ];
+            # only AdGuard on loopback queries unbound
+            access-control = [ "127.0.0.1 allow" ];
             log-servfail = true; # explicitly logs *why* a SERVFAIL happened
             tcp-reuse-timeout = 10000;
             # Based on recommended settings in https://docs.pi-hole.net/guides/dns/unbound/#configure-unbound

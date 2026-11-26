@@ -1,20 +1,17 @@
-{ lib, pkgs, ... }:
-let
-  inherit (pkgs.stdenv) hostPlatform;
-in
+{ lib, _class, ... }:
 {
   # Only SSH keys are accepted, which prevents brute-force attacks. Make sure your
-  # key is in users.users.rakhat.openssh.authorizedKeys.keys before switching.
+  # key is in users.users.<primary user>.openssh.authorizedKeys.keys before switching.
   services.openssh = {
     enable = true;
   }
-  // lib.optionalAttrs hostPlatform.isLinux {
+  // lib.optionalAttrs (_class == "nixos") {
     settings = {
       PermitRootLogin = "no";
       PasswordAuthentication = false;
     };
   }
-  // lib.optionalAttrs hostPlatform.isDarwin {
+  // lib.optionalAttrs (_class == "darwin") {
     extraConfig = ''
       PermitRootLogin no
       PasswordAuthentication no

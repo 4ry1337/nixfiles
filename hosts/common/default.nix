@@ -28,28 +28,12 @@
     backupFileExtension = "bak";
   };
   nixpkgs = {
-    # You can add overlays here
     overlays = [
-      # Add overlays your own flake exports (from overlays and pkgs dir):
       outputs.overlays.additions
       outputs.overlays.modifications
       outputs.overlays.stable-packages
-
-      # You can also add overlays exported from other flakes:
-      # neovim-nightly-overlay.overlays.default
-
-      # Or define it inline, for example:
-      # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
     ];
-    # Configure your nixpkgs instance
-    config = {
-      # Disable if you don't want unfree packages
-      allowUnfree = true;
-    };
+    config.allowUnfree = true;
   };
 
   nix =
@@ -62,10 +46,8 @@
           "nix-command"
           "flakes"
         ];
-        trusted-users = [
-          "root"
-          config.features.primaryUser
-        ];
+        # root is already trusted by default
+        trusted-users = [ config.features.primaryUser ];
       };
       gc = {
         automatic = true;

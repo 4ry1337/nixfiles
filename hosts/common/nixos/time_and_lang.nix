@@ -15,16 +15,4 @@ _: {
       LC_TELEPHONE = "kk_KZ.UTF-8";
     };
   };
-  # WARN: enabling xserver also starts GDM by default — only enable when a desktop is configured
-  /*
-    services.xserver = {
-      enable = true;
-      exportConfiguration = true;
-      xkb = {
-        layout = "us,ru";
-        variant = "";
-        options = "caps:swapescape grp:win_space_toggle";
-      };
-    };
-  */
 }
