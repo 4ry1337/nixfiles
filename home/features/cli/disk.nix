@@ -18,6 +18,9 @@ in
         # archives
         unzip
 
+        # disk usage
+        dust
+
         # disk health
         smartmontools
 
