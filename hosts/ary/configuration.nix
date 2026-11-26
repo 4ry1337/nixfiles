@@ -5,7 +5,6 @@
 {
   # config,
   lib,
-  pkgs,
   ...
 }:
 
@@ -35,14 +34,6 @@
     power.enable = true;
     tailscale.enable = true;
   };
-
-  networking.networkmanager.plugins = with pkgs; [
-    networkmanager-openconnect
-  ];
-
-  environment.systemPackages = with pkgs; [
-    openconnect
-  ];
 
   fileSystems."/mnt/windows" = {
     device = "/dev/disk/by-uuid/862266B32266A7BF";
