@@ -35,7 +35,10 @@ in
       home.packages = [ pkgs.remmina ];
     })
     (mkIf pkgs.stdenv.hostPlatform.isDarwin {
-      features.macos.casks = [ "windows-app" ];
+      features.macos.casks = [
+        "windows-app"
+        "microsoft-outlook"
+      ];
     })
 
     # nix git checks its own CA bundle, not the macOS Keychain.

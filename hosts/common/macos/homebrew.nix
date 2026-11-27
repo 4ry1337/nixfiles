@@ -19,5 +19,8 @@ in
   homebrew = {
     enable = true;
     inherit (config.home-manager.users.${user}.features.macos) casks;
+    # Only the declarations decide what is installed. "uninstall", not "zap":
+    # app data stays, so a cask declared again continues where it stopped.
+    onActivation.cleanup = "uninstall";
   };
 }
